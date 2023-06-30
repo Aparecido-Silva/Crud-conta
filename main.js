@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-const { Sequelize } = require('sequelize')
+const { Sequelize, where } = require('sequelize')
+const { bcrypt, hashSync } = require('bcrypt')
 
 //BodyParser
 const bodyParser = require('body-parser')
@@ -26,5 +27,41 @@ app.get('/cadastro', (req, res) => {
 })
 
 app.post('/cadastro', async (req, res) => {
-    
+    const buscarEmail = await userBanco.findOne({
+        where: {
+            email: req.body.email
+        }
+    })
+    const senha = req.body.email
+    const senhaHash = hashSync(senha, 8)
+
+    if(!buscarEmail) {
+            userBanco.create({
+            nome: req.body.nome,
+            email: req.body.email,
+            senha: senhaHash
+        })
+        res.status(200).send({ message: 'Usuário cadastrado' })
+    } 
+    else {
+        res.status(400).send({ message: 'Usuário já cadastrado' })
+    }
+})
+
+app.post('/login', async(req, res) => {
+    const buscarEmail = await userBanco.findOne({
+        where: {
+            email: req.body.email
+        }
+    })
+
+    const senha = req.body.email
+
+    if(!buscarEmail) {
+        res.status(400).send({ message: 'Usuário não cadastrado' })
+    } 
+    else {
+        const comparaSenha = bcrypt.compare(senha, userBanco.senha)
+        res.status(200).send({ message: 'Usuário logado' })
+    }
 })
