@@ -26,6 +26,10 @@ app.get('/cadastro', (req, res) => {
     res.sendFile(cadastro)
 })
 
+app.get('/login', (req, res) => {
+    res.sendFile(login)
+})
+
 
 app.post('/cadastro', async (req, res) => {
     const buscarEmail = await userBanco.findOne({
@@ -71,5 +75,23 @@ app.post('/login', async (req, res) => {
         else {
             res.status(200).send({ message: 'Usuário logado' })
         }
+    }
+})
+
+app.put('/update', async (req, res) => {
+    const { id, email, senha } = req.body
+
+    const buscarUser = await userBanco.findOne({ where: { email } })
+    const senhaHash = bcrypt.hashSync(senha, 8)
+
+    if (!buscarUser) {
+        res.status(200).send({ message: 'Usuário não encontrado' })
+    }
+    else {
+        const user = await userBanco.update(
+            { senha: senhaHash },
+            { where: { email } }
+        )
+        res.status(200).send({ message: user })
     }
 })
