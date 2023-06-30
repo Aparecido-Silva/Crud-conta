@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const { Sequelize, where } = require('sequelize')
-const { bcrypt, hashSync } = require('bcrypt')
+const bcrypt = require('bcrypt')
 
 //BodyParser
 const bodyParser = require('body-parser')
@@ -26,42 +26,50 @@ app.get('/cadastro', (req, res) => {
     res.sendFile(cadastro)
 })
 
+
 app.post('/cadastro', async (req, res) => {
     const buscarEmail = await userBanco.findOne({
         where: {
             email: req.body.email
         }
     })
-    const senha = req.body.email
-    const senhaHash = hashSync(senha, 8)
 
-    if(!buscarEmail) {
-            userBanco.create({
+    const senha = req.body.senha
+    const senhaHash = bcrypt.hashSync(senha, 8)
+
+    if (!buscarEmail) {
+        userBanco.create({
             nome: req.body.nome,
             email: req.body.email,
             senha: senhaHash
         })
         res.status(200).send({ message: 'Usuário cadastrado' })
-    } 
+    }
     else {
         res.status(400).send({ message: 'Usuário já cadastrado' })
     }
 })
 
-app.post('/login', async(req, res) => {
+app.post('/login', async (req, res) => {
     const buscarEmail = await userBanco.findOne({
+        attributes: ['email', 'senha'],
         where: {
             email: req.body.email
         }
     })
 
-    const senha = req.body.email
+    const senhaUser = req.body.senha
 
-    if(!buscarEmail) {
+    if (!buscarEmail) {
         res.status(400).send({ message: 'Usuário não cadastrado' })
-    } 
+    }
     else {
-        const comparaSenha = bcrypt.compare(senha, userBanco.senha)
-        res.status(200).send({ message: 'Usuário logado' })
+        const compareSenha = bcrypt.compareSync(senhaUser, buscarEmail.senha)
+        if (!compareSenha) {
+            res.status(400).send({ message: 'Senha incorreta' })
+        }
+        else {
+            res.status(200).send({ message: 'Usuário logado' })
+        }
     }
 })
