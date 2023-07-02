@@ -4,43 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css/style.css">
     <title>Faça seu cadastro</title>
 </head>
 <body>
     <main>
-        <section class="section-conteudo">
-            <section class="left-conteudo">
-                <div class="left-logo"><p>Untitled UI</p></div>
-                <div class="div-form-login">
-                    <div class="div-form">
-                        <h1>Crie a sua conta aqui</h1>
-                        <p>Comece sua avaliação gratuita de 30 dias. Nenhum cartão de crédito.</p>
-                        <form action="/cadastro" method="post" class="left-form">
-                            <input type="text" name="nome" id="nome" placeholder="Nome" required>
-                            <input type="email" name="email" id="email" placeholder="Email" required>
-                            <input type="password" name="senha" id="senha" placeholder="Senha" required>
-                            <input type="submit" value="Criar conta" class="btn-create" id="button-create">
-                        </form>
-                        <div class="div-login">
-                            <a href="#" class="btn-google">
-                                <img class="logo-google" src="./google.svg" alt="Logo do google"><p>Inscreva-se com o Google</p>
-                            </a>
-                            <p>Já tem uma conta?<strong> <a href="/" target="_blank" >Fazer login</a></strong></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="div-credencias">
-                    <p>Untitled UI 2077</p>
-                    <a href="#">help@untitledui.com</a>
-                </div>
-            </section>
-
-            <section class="right-conteudo">
-                <img src="./restaurante2.jpg" alt="Foto de restaurente">
-            </section>
-        </section>
+        <form action="" method="post" class="form">
+            <h1 class="form__title">Cadastro</h1>
+            <label for="nome" class="form__subtitle">Nome completo</label>
+            <input type="text" placeholder="Nome completo" id="nome" name="nome" class="form__input">
+            <label for="email" class="form__subtitle">Email</label>
+            <input type="email" placeholder="@gmail.com" id="email" name="email" class="form__input">
+            <label for="senha" class="form__subtitle">Senha</label>
+            <input type="password" placeholder="Senha" id="senha" name="senha" class="form__input">
+            <fieldset class="form__senha">
+                <span class="senha--checkbox">
+                    <input type="checkbox" id="mostrar" class="senha__mostrar">
+                    <label for="mostrar">Mostrar senha</label>
+                </span>
+                <a href="#" class="senha__link">Esqueceu a Senha?</a>
+            </fieldset>
+            <input type="submit" value="Cadastrar" class="form__button">
+            <span class="form__conta">
+                Não tenho uma Conta?
+                <a href="#" class="conta__link">Inscreve-se</a>
+            </span>
+        </form>
     </main>
-    <script src="/index.js"></script>
 </body>
 </html>

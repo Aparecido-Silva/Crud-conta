@@ -38,7 +38,7 @@ app.post('/cadastro', async (req, res) => {
         }
     })
 
-    const senha = req.body.senha
+    const { senha } = req.body
     const senhaHash = bcrypt.hashSync(senha, 8)
 
     if (!buscarEmail) {
@@ -88,10 +88,44 @@ app.put('/update', async (req, res) => {
         res.status(200).send({ message: 'Usuário não encontrado' })
     }
     else {
-        const user = await userBanco.update(
-            { senha: senhaHash },
-            { where: { email } }
-        )
-        res.status(200).send({ message: user })
+        try {
+            const user = await userBanco.update(
+                { senha: senhaHash },
+                { where: { email } }
+            )
+            res.status(200).send({ message: 'Senha alterada com sucesso' })
+        } catch (erro) {
+            res.status(400).send({ message: erro })
+        }
+    }
+})
+
+app.delete('/delete', async (req, res) => {
+    const { email, senha } = req.body
+
+    const buscarUser = await userBanco.findOne({
+        attributes: ['email', 'senha'],
+        where: { email }
+    })
+
+    const compareSenha = bcrypt.compareSync(senha, buscarUser.senha)
+
+    if (!buscarUser) {
+        res.status(400).send({ message: 'Nenhum usuário com este email' })
+    }
+    else {
+        if (!compareSenha) {
+            res.status(400).send({ message: 'Senha incorreta' })
+        }
+        else {
+            try {
+                await userBanco.destroy({
+                    where: { email }
+                })
+                res.status(200).send({ message: 'Usuário deletado com sucesso' })
+            } catch (erro) {
+                res.status(400).send({ message: 'Erro ao deleta usuário' })
+            }
+        }
     }
 })

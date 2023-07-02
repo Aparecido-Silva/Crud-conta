@@ -1,0 +1,107 @@
+@import url('/config/style/style.css');
+
+*, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--azul-back);
+    font-family: var(--fonte);
+}
+
+html {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    background: var(--white-1);
+    padding: 3em 2em 2em;
+    border-radius: 1.5em;
+    box-shadow: var(--box-shadow);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50vw;
+    max-width: 350px;
+}
+
+.form__subtitle {
+    position: relative;
+    margin-right: auto;
+}
+
+.form__input {
+    width: 100%;
+    padding: 0.6em .4em;
+    outline: none;
+    margin-bottom: 1em;
+    border: none;
+    background: var(--back-input);
+}
+
+.form__title {
+    text-transform: uppercase;
+    margin-bottom: .5em;
+    font-size: 1.7em;
+    margin-bottom: .6em;
+}
+
+.form__subtitle {
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.form__button {
+    width: 100%;
+    padding: .7em 0;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: var(--blue-1);
+    border: none;
+    color: var(--white-2);
+    transition: all .2s;
+    font-size: 1em;
+    font-family: var(--fonte);
+}
+
+.form__button:hover {
+    background: var(--blue-hover);
+}
+
+.form__senha {
+    width: 100%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 1em;
+    font-size: 14px;
+}
+
+.form__conta {
+    width: 100%;
+    padding: 1em 0;
+    font-size: 14px;
+}
+
+.senha--checkbox {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.senha__link, .conta__link {
+    color: var(--blue-1);
+}
