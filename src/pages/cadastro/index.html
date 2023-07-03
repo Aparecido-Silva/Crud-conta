@@ -4,32 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css/style.css">
+    <link rel="stylesheet" href="./style/style.css">
     <title>Faça seu cadastro</title>
 </head>
 <body>
     <main>
-        <form action="" method="post" class="form">
+        <form action="/cadastro" method="post" class="form">
             <h1 class="form__title">Cadastro</h1>
             <label for="nome" class="form__subtitle">Nome completo</label>
-            <input type="text" placeholder="Nome completo" id="nome" name="nome" class="form__input">
+            <input type="text" placeholder="Nome completo" id="nome" name="nome" class="form__input" required>
             <label for="email" class="form__subtitle">Email</label>
             <input type="email" placeholder="@gmail.com" id="email" name="email" class="form__input">
             <label for="senha" class="form__subtitle">Senha</label>
-            <input type="password" placeholder="Senha" id="senha" name="senha" class="form__input">
+            <input type="password" placeholder="Senha" id="senha" name="senha" class="form__input" required>
             <fieldset class="form__senha">
                 <span class="senha--checkbox">
-                    <input type="checkbox" id="mostrar" class="senha__mostrar">
-                    <label for="mostrar">Mostrar senha</label>
+                    <input type="checkbox" id="mostrar" class="senha__mostrar senha--check">
+                    <label for="mostrar" class="senha--check">Mostrar senha</label>
                 </span>
-                <a href="#" class="senha__link">Esqueceu a Senha?</a>
+                <span class="form__conta">
+                    Já tem uma Conta?
+                    <a href="/login" class="conta__link">Fazer login</a>
+                </span>
             </fieldset>
             <input type="submit" value="Cadastrar" class="form__button">
-            <span class="form__conta">
-                Não tenho uma Conta?
-                <a href="#" class="conta__link">Inscreve-se</a>
-            </span>
         </form>
     </main>
+    <script src="./js/main.js"></script>
 </body>
 </html>

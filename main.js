@@ -3,6 +3,7 @@ const app = express()
 const { Sequelize, where } = require('sequelize')
 const bcrypt = require('bcrypt')
 
+
 //BodyParser
 const bodyParser = require('body-parser')
 
@@ -21,6 +22,7 @@ app.listen(3000, () => {
 const cadastro = '/cadastro'
 const login = '/login'
 app.use(express.static(__dirname + '/src/pages'))
+
 
 app.get('/cadastro', (req, res) => {
     res.sendFile(cadastro)
