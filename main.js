@@ -19,9 +19,10 @@ app.listen(3000, () => {
 })
 
 //Páginas
+app.use(express.static(__dirname + '/src/pages'))
 const cadastro = '/cadastro'
 const login = '/login'
-app.use(express.static(__dirname + '/src/pages'))
+const redefinir = '/redefinir'
 
 
 app.get('/cadastro', (req, res) => {
@@ -30,6 +31,10 @@ app.get('/cadastro', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.sendFile(login)
+})
+
+app.get('/redefinir', (req, res) => {
+    res.sendFile(redefinir)
 })
 
 
@@ -81,34 +86,45 @@ app.post('/login', async (req, res) => {
 })
 
 app.put('/update', async (req, res) => {
-    const { id, email, senha } = req.body
-
-    const buscarUser = await userBanco.findOne({ where: { email } })
-    const senhaHash = bcrypt.hashSync(senha, 8)
-
-    if (!buscarUser) {
-        res.status(200).send({ message: 'Usuário não encontrado' })
-    }
-    else {
-        try {
-            const user = await userBanco.update(
-                { senha: senhaHash },
-                { where: { email } }
-            )
-            res.status(200).send({ message: 'Senha alterada com sucesso' })
-        } catch (erro) {
-            res.status(400).send({ message: erro })
-        }
-    }
-})
-
-app.delete('/delete', async (req, res) => {
     const { email, senha } = req.body
 
     const buscarUser = await userBanco.findOne({
         attributes: ['email', 'senha'],
         where: { email }
     })
+
+    if (!buscarUser) {
+        res.status(200).send({ message: 'Usuário não encontrado' })
+    }
+    else {
+        const compareSenha = bcrypt.compareSync(senha, buscarUser.senha)
+
+        if (compareSenha) {
+            res.status(400).send({ message: 'Sua senha não pode ser a mesma' })
+        }
+        else {
+            const senhaHash = bcrypt.hashSync(senha, 8)
+
+            try {
+                const user = await userBanco.update(
+                    { senha: senhaHash },
+                    { where: { email } }
+                )
+                res.status(200).send({ message: 'Senha alterada com sucesso' })
+            } catch (erro) {
+                res.status(400).send({ message: erro })
+            }
+        }
+    }
+})
+
+app.delete('/delete', async (req, res) => {
+    const buscarUser = await userBanco.findOne({
+        attributes: ['email', 'senha'],
+        where: { email }
+    })
+    const { email, senha } = req.body
+
 
     const compareSenha = bcrypt.compareSync(senha, buscarUser.senha)
 
@@ -131,3 +147,6 @@ app.delete('/delete', async (req, res) => {
         }
     }
 })
+
+
+
