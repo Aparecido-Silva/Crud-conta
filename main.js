@@ -3,6 +3,7 @@ const app = express()
 const { Sequelize, where } = require('sequelize')
 const bcrypt = require('bcrypt')
 
+const port = process.env.PORT || 3000
 
 //BodyParser
 const bodyParser = require('body-parser')
@@ -14,7 +15,7 @@ app.use(bodyParser.json())
 const conexaoBanco = require('./models/db')
 const userBanco = require('./models/user')
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log('Servidor rodando na porta 3000')
 })
 
