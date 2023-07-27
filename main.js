@@ -23,6 +23,7 @@ app.use(express.static(__dirname + '/src/pages'))
 const cadastro = '/cadastro'
 const login = '/login'
 const redefinir = '/redefinir'
+const deletar = '/deletar'
 
 
 app.get('/cadastro', (req, res) => {
@@ -35,6 +36,10 @@ app.get('/login', (req, res) => {
 
 app.get('/redefinir', (req, res) => {
     res.sendFile(redefinir)
+})
+
+app.get('/deletar', (req, res) => {
+    res.sendFile(deletar)
 })
 
 
@@ -54,38 +59,36 @@ app.post('/cadastro', async (req, res) => {
             email: req.body.email,
             senha: senhaHash
         })
-        res.status(200).send({ message: 'Usuário cadastrado' })
+        res.status(200).send('Usuário cadastrado')
     }
     else {
-        res.status(400).send({ message: 'Usuário já cadastrado' })
+        res.status(400).send('Usuário já cadastrado')
     }
 })
 
 app.post('/login', async (req, res) => {
+    const { email, senha } = req.body
+
     const buscarEmail = await userBanco.findOne({
         attributes: ['email', 'senha'],
-        where: {
-            email: req.body.email
-        }
+        where: { email }
     })
 
-    const senhaUser = req.body.senha
-
     if (!buscarEmail) {
-        res.status(400).send({ message: 'Usuário não cadastrado' })
+        res.status(400).send('Usuário não cadastrado')
     }
     else {
-        const compareSenha = bcrypt.compareSync(senhaUser, buscarEmail.senha)
+        const compareSenha = await bcrypt.compareSync(senha, buscarEmail.senha)
         if (!compareSenha) {
-            res.status(400).send({ message: 'Senha incorreta' })
+            res.status(400).send('Senha incorreta')
         }
         else {
-            res.status(200).send({ message: 'Usuário logado' })
+            res.status(200).send('Usuário logado')
         }
     }
 })
 
-app.put('/update', async (req, res) => {
+app.post('/update', async (req, res) => {
     const { email, senha } = req.body
 
     const buscarUser = await userBanco.findOne({
@@ -94,55 +97,54 @@ app.put('/update', async (req, res) => {
     })
 
     if (!buscarUser) {
-        res.status(200).send({ message: 'Usuário não encontrado' })
+        res.status(400).send('Usuário não encontrado')
     }
     else {
         const compareSenha = bcrypt.compareSync(senha, buscarUser.senha)
 
         if (compareSenha) {
-            res.status(400).send({ message: 'Sua senha não pode ser a mesma' })
+            res.status(400).send('Sua senha não pode ser a mesma')
         }
         else {
             const senhaHash = bcrypt.hashSync(senha, 8)
-
             try {
-                const user = await userBanco.update(
+                await userBanco.update(
                     { senha: senhaHash },
                     { where: { email } }
                 )
-                res.status(200).send({ message: 'Senha alterada com sucesso' })
+                res.status(200).send('Senha alterada com sucesso')
             } catch (erro) {
-                res.status(400).send({ message: erro })
+                res.status(400).send(erro)
             }
         }
     }
 })
 
-app.delete('/delete', async (req, res) => {
+app.post('/delete', async (req, res) => {
+    const { email, senha } = req.body
+
     const buscarUser = await userBanco.findOne({
         attributes: ['email', 'senha'],
         where: { email }
     })
-    const { email, senha } = req.body
-
-
-    const compareSenha = bcrypt.compareSync(senha, buscarUser.senha)
 
     if (!buscarUser) {
-        res.status(400).send({ message: 'Nenhum usuário com este email' })
+        res.status(400).send( 'Nenhum usuário com este email')
     }
     else {
+        const compareSenha = bcrypt.compareSync(senha, buscarUser.senha)
+
         if (!compareSenha) {
-            res.status(400).send({ message: 'Senha incorreta' })
+            res.status(400).send('Senha incorreta')
         }
         else {
             try {
-                await userBanco.destroy({
+                userBanco.destroy({
                     where: { email }
                 })
-                res.status(200).send({ message: 'Usuário deletado com sucesso' })
+                res.status(200).send('Usuário deletado com sucesso')
             } catch (erro) {
-                res.status(400).send({ message: 'Erro ao deleta usuário' })
+                res.status(400).send('Erro ao deleta usuário')
             }
         }
     }

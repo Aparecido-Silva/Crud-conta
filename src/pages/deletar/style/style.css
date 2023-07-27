@@ -130,9 +130,3 @@ main {
 .senha__link, .conta__link {
     color: var(--blue-1);
 }
-
-.apagar-user  {
-    font-size: 14px;
-    position: relative;
-    margin-right: auto;
-}

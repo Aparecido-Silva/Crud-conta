@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="./style/style.css">
     <title>Faça seu cadastro</title>
 </head>
 <body>
     <main>
-        <form action="/cadastro" method="post" class="form">
+        <form method="post" class="form">
             <h1 class="form__title">Cadastro</h1>
             <label for="nome" class="form__subtitle">Nome completo</label>
             <input type="text" placeholder="Nome completo" id="nome" name="nome" class="form__input" required>
             <label for="email" class="form__subtitle">Email</label>
-            <input type="email" placeholder="@gmail.com" id="email" name="email" class="form__input">
+            <input type="email" placeholder="@gmail.com" id="email" name="email" class="form__input" required>
             <label for="senha" class="form__subtitle">Senha</label>
             <input type="password" placeholder="Senha" id="senha" name="senha" class="form__input" required>
             <fieldset class="form__senha">
@@ -30,6 +31,8 @@
             <input type="submit" value="Cadastrar" class="form__button">
         </form>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     <script src="./js/main.js"></script>
+    <script src="./serve.js"></script>
 </body>
 </html>

@@ -6,27 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style/style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <title>Alterar senha</title>
+    <title>Deletar Usuário</title>
 </head>
 <body>
     <main>
-        <form action="/update" method="post" class="form">
-            <h1 class="form__title">Redefinir senha</h1>
+        <form method="post" class="form">
+            <h1 class="form__title">Apagar usuário</h1>
             <label for="email" class="form__subtitle">Digite seu Email</label>
             <input type="email" placeholder="@gmail.com" id="email" name="email" class="form__input">
-            <label for="senha" class="form__subtitle">Insira sua nova Senha</label>
+            <label for="senha" class="form__subtitle">Digite sua senha</label>
             <input type="password" placeholder="Senha" id="senha" name="senha" class="form__input" >
             <fieldset class="form__senha">
                 <span class="senha--checkbox">
                     <input type="checkbox" id="mostrar" class="senha__mostrar senha--check ">
                     <label for="mostrar" class="senha--check ">Mostrar senha</label>
                 </span>
-                <a href="/login" class="senha__link">Fazer login?</a>
+                <a href="/login" class="senha__link">Voltar para login?</a>
             </fieldset>
-            <input type="submit" value="Alterar senha" class="form__button">
+            <input type="submit" value="Deletar email" class="form__button">
         </form>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     <script src="./js/main.js"></script>
     <script src="./serve.js"></script>
 </body>

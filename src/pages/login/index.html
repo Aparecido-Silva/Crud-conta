@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Faça seu login</title>
 </head>
 <body>
@@ -27,9 +28,11 @@
                 Não tenho uma Conta?
                 <a href="/cadastro" class="conta__link">Inscreve-se</a>
             </span>
+            <a href="/deletar" class="senha__link apagar-user">Apagar usuário</a>
         </form>
     </main>
-    <script src="./js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./serve.js"></script>
 </body>
 </html>
